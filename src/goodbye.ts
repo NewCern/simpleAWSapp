@@ -1,8 +1,9 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda';
 
-export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
-    const parsedBody = JSON.parse(event.body || '');
+    const requestBody = event.body;
+    const parsedBody = JSON.parse(requestBody || '');
     return {
       statusCode: 200,
       body: `Goodbye ${parsedBody?.name}`,

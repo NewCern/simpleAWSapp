@@ -2,42 +2,42 @@ service: serverlessSetup
 
 provider:
   name: aws
-  runtime: nodejs18.x
-  region: us-east-2
+  runtime: nodejs16.x
+  region: us-east-1
 
 # functions
 functions:
   hello:
-    handler: src/functions/hello.handler
+    handler: src/hello.handler
     events: # The events that trigger this function
       - http: 
-          path: serverlessSetup/hello
+          path: /serverlessSetup/hello
           method: get
   goodbye:
-    handler: src/functions/goodbye.handler
+    handler: src/goodbye.handler
     events:
       - http: 
-          path: serverlessSetup/goodbye
+          path: /serverlessSetup/goodbye
           method: post
-  question:
-    handler: src/functions/question.handler
-    dependsOn: SNSHelloEvent
-    events:
-      - sns:
-          arn: !Ref SNSHelloEvent
-          topicName: hello-event
+#   question:
+#     handler: src/functions/question.handler
+#     dependsOn: SNSHelloEvent
+#     events:
+#       - sns:
+#           arn: !Ref SNSHelloEvent
+#           topicName: hello-event
 
-# Serverless plugins
-plugins:
-  - serverless-plugin-typescript
-  - serverless-offline
+# # Serverless plugins
+# plugins:
+#   - serverless-plugin-typescript
+#   - serverless-offline
 
-# Resources your functions use
-resources:
-  Resources:
-    # SNS Topics
-    SNSHelloEvent:
-      Type: AWS::SNS::Topic
-      Properties:
-        DisplayName: Hello Event Topic
-        TopicName: hello-event
+# # Resources your functions use
+# resources:
+#   Resources:
+#     # SNS Topics
+#     SNSHelloEvent:
+#       Type: AWS::SNS::Topic
+#       Properties:
+#         DisplayName: Hello Event Topic
+#         TopicName: hello-event
